@@ -21,25 +21,29 @@ public class ScoreManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (scoreIncreasing) {
-            scoreCount += (pointsPerSecond +(int)(1.0f+(thePlayer.xJump)*5))* Time.deltaTime;
+            scoreCount += (pointsPerSecond +(int)(1.0f+(thePlayer.xJump)*2))* Time.deltaTime;
         }
         if (scoreCount > highScoreCount) {
             highScoreCount = scoreCount;
             PlayerPrefs.SetFloat("HighScore", highScoreCount);
         }
         
-        if (thePlayer.xJump < 1)
-        {
-            xJumpsText.text = "Stomp!";
-        }
+        
         if (thePlayer.fly) {
             xJumpsText.text = "Fly!";
         }
         else
         {
             xJumpsText.text = "xJumps: " + (int)thePlayer.xJump;
+            if (thePlayer.xJump < 1)
+            {
+                xJumpsText.text = "Stomp!";
+            }
         }
         scoreText.text = "Score: " + Mathf.Round(scoreCount);
         highScoreText.text = "Highscore: " + Mathf.Round(highScoreCount);
 	}
+    public void addScore(int pointsToAdd) {
+        scoreCount += pointsToAdd;
+    }
 }

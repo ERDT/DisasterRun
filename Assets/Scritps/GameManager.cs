@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour {
     private Vector3 platformStartPoint;
     public PlayerController thePlayer;
     private Vector3 playerStartPoint;
+    private Quaternion playerStartRotation;
     private PlatformDestroyer[] platformList;
+    public DeathMenu deathScreen;
 	// Use this for initialization
 	void Start () {
         jumpStore = thePlayer.xJump;
 		platformStartPoint = platformGenerator.position;
         playerStartPoint = thePlayer.transform.position;
+        playerStartRotation = thePlayer.transform.rotation;
         theScoreManager = FindObjectOfType<ScoreManager>();
     }
 	
@@ -24,9 +27,39 @@ public class GameManager : MonoBehaviour {
 	}
     public void RestartGame()
     {
-        StartCoroutine("RestartGameCo");   
+        theScoreManager.scoreIncreasing = false;
+        thePlayer.gameObject.SetActive(false);
+        deathScreen.gameObject.SetActive(true);
+        //StartCoroutine("RestartGameCo");
+
     }
-    public IEnumerator RestartGameCo()
+
+    public void reset() {
+        thePlayer.xJump = jumpStore;
+        thePlayer.jumped = jumpStore;
+        
+
+
+        //yield return new WaitForSeconds(0.5f);
+
+        platformList = FindObjectsOfType<PlatformDestroyer>();
+        for (int i = 0; i < platformList.Length; i++)
+        {
+            platformList[i].gameObject.SetActive(false);
+        }
+        thePlayer.transform.position = playerStartPoint;
+
+
+        platformGenerator.position = platformStartPoint;
+        thePlayer.gameObject.SetActive(true);
+        thePlayer.transform.rotation = playerStartRotation;
+
+
+        theScoreManager.scoreCount = 0;
+        theScoreManager.scoreIncreasing = true;
+        deathScreen.gameObject.SetActive(false);
+    }
+    /*public IEnumerator RestartGameCo()
     {
         theScoreManager.scoreIncreasing = false;
         thePlayer.xJump = jumpStore;
@@ -40,11 +73,12 @@ public class GameManager : MonoBehaviour {
             platformList[i].gameObject.SetActive(false);
         }
         thePlayer.transform.position = playerStartPoint;
+        
 
         platformGenerator.position = platformStartPoint;
         thePlayer.gameObject.SetActive(true);
-        thePlayer.transform.Rotate(0, 0, 0);
+        thePlayer.transform.rotation = playerStartRotation;
         theScoreManager.scoreCount = 0;
         theScoreManager.scoreIncreasing = true;
-    }
+    }*/
 }

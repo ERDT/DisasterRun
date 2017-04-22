@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlatformGenerator : MonoBehaviour {
     public GameObject thePlatform;
     public Transform generationPoint;
+    public CoinGenerator theCoinGenerator;
+    public float randomCoinThreshold;
     //public GameObject[] thePlatforms;
     private float[] platformWidths;
     private int platformSelector;
@@ -24,6 +26,7 @@ public class PlatformGenerator : MonoBehaviour {
         // Use this for initialization
 	void Start () {
         //platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
+        //theCoinGenerator = FindObjectOfType<CoinGenerator>();
         platformWidths = new float[theObjectPools.Length];
         minHight = transform.position.y;
         maxHight = maxHightPoint.position.y;
@@ -62,6 +65,11 @@ public class PlatformGenerator : MonoBehaviour {
             newPlatform.transform.position = transform.position;
             newPlatform.transform.rotation = transform.rotation;
             newPlatform.SetActive(true);
+            if (Random.Range(0f, 100f) <randomCoinThreshold) {
+                theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z));
+            }
+
+
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2), transform.position.y, transform.position.z);
 
 

@@ -82,8 +82,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scritps\CameraController.cs" />
+    <Compile Include="Assets\Scritps\CoinGenerator.cs" />
+    <Compile Include="Assets\Scritps\DeathMenu.cs" />
     <Compile Include="Assets\Scritps\GameManager.cs" />
+    <Compile Include="Assets\Scritps\GoldCoinPoints.cs" />
+    <Compile Include="Assets\Scritps\MainMenuController.cs" />
     <Compile Include="Assets\Scritps\ObjectPooler.cs" />
+    <Compile Include="Assets\Scritps\PauseMenu.cs" />
     <Compile Include="Assets\Scritps\PlatformDestroyer.cs" />
     <Compile Include="Assets\Scritps\PlatformGenerator.cs" />
     <Compile Include="Assets\Scritps\PlayerController.cs" />
