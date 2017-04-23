@@ -22,9 +22,10 @@ public class PlatformGenerator : MonoBehaviour {
     private float hightChange;
     
     public ObjectPooler[] theObjectPools;
-	
-        // Use this for initialization
-	void Start () {
+    
+
+    // Use this for initialization
+    void Start () {
         //platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
         //theCoinGenerator = FindObjectOfType<CoinGenerator>();
         platformWidths = new float[theObjectPools.Length];
@@ -66,7 +67,7 @@ public class PlatformGenerator : MonoBehaviour {
             newPlatform.transform.rotation = transform.rotation;
             newPlatform.SetActive(true);
             if (Random.Range(0f, 100f) <randomCoinThreshold) {
-                theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z));
+                theCoinGenerator.SpawnCoinsV2(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z));
             }
 
 

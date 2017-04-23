@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     public AudioSource jumpSound;
     public AudioSource deathSound;
+    public PauseMenu pauseMenu;
     private float moveSpeedStore;
     private float speedMilestoneCountStore;
     public float speedIncreaseMilestoneStore;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     private float jumpTimeCounter;
     private bool canDoubleJump;
     private AudioSource mainMusic;
+    public bool isPaused;
 
     private Rigidbody2D myRigidbody;
 
@@ -40,6 +42,10 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        if (PlayerPrefs.HasKey("xJump"))
+        {
+            xJump = PlayerPrefs.GetFloat("xJump");
+        }
         mainMusic = GameObject.Find("Music").GetComponent<AudioSource>();
         stoppedJumping = true;
         jumpTimeCounter = jumpTime;
@@ -48,7 +54,7 @@ public class PlayerController : MonoBehaviour {
         forceJump = jumpForce-xJump;
         myRigidbody = GetComponent<Rigidbody2D>();
 
-        //myCollider = GetComponent<Collider2D>();
+        //myCollider = GetComponent<Collider2D>();private Collider2D myCollider;
 
         myAnimator = GetComponent<Animator>();
 
@@ -61,7 +67,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        isPaused = pauseMenu.isPaused;
         if (transform.position.x > speedMilestoneCount) {
             speedMilestoneCount += speedIncreaseMilestone;
             speedIncreaseMilestone = speedIncreaseMilestone * speedMultiplier;
@@ -78,7 +84,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             
-            if (canDoubleJump || grounded)
+            if ((canDoubleJump || grounded) && !isPaused)
             {
                 jumpSound.Play();
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
@@ -92,7 +98,7 @@ public class PlayerController : MonoBehaviour {
                 stomp = true;
             }
         }
-           if((Input.GetKey  (KeyCode.Space) || Input.GetMouseButton(0) ) && !stoppedJumping)
+           if(((Input.GetKey  (KeyCode.Space) || Input.GetMouseButton(0) ) && !stoppedJumping) && !isPaused)
             {
                 if (jumpTimeCounter > 0)
                 {       

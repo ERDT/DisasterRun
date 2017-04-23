@@ -35,9 +35,16 @@ public class GameManager : MonoBehaviour {
     }
 
     public void reset() {
-        thePlayer.xJump = jumpStore;
-        thePlayer.jumped = jumpStore;
-        
+        if (PlayerPrefs.HasKey("xJump"))
+        {
+            thePlayer.xJump = PlayerPrefs.GetFloat("xJump");
+            thePlayer.jumped = PlayerPrefs.GetFloat("xJump");
+        }
+        else
+        {
+            thePlayer.xJump = jumpStore;
+            thePlayer.jumped = jumpStore;
+        }
 
 
         //yield return new WaitForSeconds(0.5f);
